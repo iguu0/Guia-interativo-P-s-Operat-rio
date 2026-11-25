@@ -91,3 +91,14 @@ function mostrarCuidados(procedimento, botaoClicado) {
 
     atualizarBotaoAtivo(procedimento, botaoClicado);
 }
+function atualizarBotaoAtivo(procedimentoSelecionado, botaoClicado) {
+    const botoes = document.querySelectorAll(".procedimento");
+
+    botoes.forEach(botao => {
+        const estaAtivo = botaoClicado
+            ? botao === botaoClicado
+            : botao.getAttribute("onclick")?.includes('${procedimentoSelecionado}');
+
+        botao.classList.toggle("ativo", Boolean(estaAtivo));
+    });
+}
