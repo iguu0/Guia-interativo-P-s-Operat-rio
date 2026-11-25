@@ -72,3 +72,22 @@ function preencherTabela(tbody, itens, simbolo) {
 
     tbody.appendChild(fragmento);
 }
+function mostrarCuidados(procedimento, botaoClicado) {
+    const info = dadosCuidados[procedimento];
+    if (!info) return;
+
+    const tituloEl = document.getElementById("titulo-resultado");
+    const subtituloEl = document.getElementById("subtitulo-resultado");
+    const areaTabelas = document.getElementById("area-tabelas");
+    const corpoFazer = document.getElementById("corpo-tabela-fazer");
+    const corpoNaoFazer = document.getElementById("corpo-tabela-nao-fazer");
+
+    tituloEl.textContent = info.titulo;
+    subtituloEl.hidden = true;
+    areaTabelas.hidden = false;
+
+    preencherTabela(corpoFazer, info.fazer, "✔️");
+    preencherTabela(corpoNaoFazer, info.naoFazer, "✖️");
+
+    atualizarBotaoAtivo(procedimento, botaoClicado);
+}
