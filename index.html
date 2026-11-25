@@ -23,27 +23,47 @@
 
         <section class="procedimentos">
 
-            <button class="procedimento">
+            <button class="procedimento" type="button" onclick="mostrarCuidados('siso', this)">
                 🦷​ Extração de Siso
             </button>
 
-            <button class="procedimento">
+            <button class="procedimento" type="button" onclick="mostrarCuidados('canal', this)">
                 🩺​ Tratamento de Canal
             </button>
 
-            <button class="procedimento">
+            <button class="procedimento" type="button" onclick="mostrarCuidados('clareamento', this)">
                 ✨​ Clareamento
             </button>
 
         </section>
 
         <section id="resultado" class="resultado">
-            <h2>Seus cuidados aparecerão aqui</h2>
-            <p>Escolha um procedimento para começar.</p>
+            <h2 id="titulo-resultado">Seus cuidados aparecerão aqui</h2>
+            <p id="subtitulo-resultado">Escolha um procedimento para começar.</p>
+
+            <div id="area-tabelas" class="tabelas-container" hidden>
+                <table class="tabela-cuidados fazer">
+                    <thead>
+                        <tr>
+                            <th scope="col">O que fazer</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-tabela-fazer"></tbody>
+                </table>
+
+                <table class="tabela-cuidados nao-fazer">
+                    <thead>
+                        <tr>
+                            <th scope="col">O que evitar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-tabela-nao-fazer"></tbody>
+                </table>
+            </div>
         </section>
 
-        <section class="acoes">
-            <button id="btn-download" class="btn-download">
+        <section class="botoes">
+            <button id="btn-download" class="btn-download" type="button">
                 📥 Baixar Cuidados
             </button>
         </section>
