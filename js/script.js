@@ -50,3 +50,25 @@ const dadosCuidados = {
         ]
     }
 };
+function preencherTabela(tbody, itens, simbolo) {
+    tbody.replaceChildren();
+
+    const fragmento = document.createDocumentFragment();
+
+    itens.forEach((item) => {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+
+        const icone = document.createElement("span");
+        icone.className = "icone-status";
+        icone.setAttribute("aria-hidden", "true");
+        icone.textContent = simbolo;
+
+        td.appendChild(icone);
+        td.appendChild(document.createTextNode(item));
+        tr.appendChild(td);
+        fragmento.appendChild(tr);
+    });
+
+    tbody.appendChild(fragmento);
+}
