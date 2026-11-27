@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OdontoGuia</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16.png">
+    <link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.png">
     <link rel="stylesheet" href="css/style.css">
+    <script>
+        try { if (localStorage.getItem("tema") === "escuro") document.documentElement.setAttribute("data-tema", "escuro"); } catch (e) {}
+    </script>
 </head>
 <body>
 
@@ -12,7 +19,9 @@
         <h1>🦷 OdontoGuia</h1>
         <p>Cuide do seu sorriso após o procedimento.</p>
 
-        <img src="img/sun.png" alt="Alterar Tema" id="btn-theme">
+        <button type="button" id="btn-theme" class="btn-theme" aria-label="Ativar tema escuro" title="Alternar tema">
+            <img src="img/moon.png" alt="" id="icone-tema" width="24" height="24">
+        </button>
     </header>
 
     <main>

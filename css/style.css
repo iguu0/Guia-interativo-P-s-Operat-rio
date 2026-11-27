@@ -35,6 +35,7 @@ body {
 }
 
 header {
+    position: relative;
     background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
     color: white;
     text-align: center;
@@ -235,6 +236,88 @@ footer {
     margin-top: auto;
 }
 
+/* ===== Tema escuro ===== */
+:root[data-tema="escuro"] {
+    --cor-primaria: #14b8a6;
+    --cor-primaria-escura: #2dd4bf;
+    --cor-fundo: #0f172a;
+    --cor-card: #1e293b;
+    --cor-texto: #e2e8f0;
+    --cor-texto-suave: #94a3b8;
+    --borda: #334155;
+
+    --fazer-bg: #0f2a26;
+    --fazer-header: #0f766e;
+    --fazer-borda: #115e59;
+    --fazer-texto: #6ee7b7;
+
+    --nao-fazer-bg: #2a1215;
+    --nao-fazer-header: #b91c1c;
+    --nao-fazer-borda: #7f1d1d;
+    --nao-fazer-texto: #fca5a5;
+}
+
+:root[data-tema="escuro"] header {
+    background: linear-gradient(135deg, #0f766e, #134e4a);
+}
+
+:root[data-tema="escuro"] .procedimento:hover,
+:root[data-tema="escuro"] .procedimento:focus-visible,
+:root[data-tema="escuro"] .procedimento.ativo {
+    color: #0f172a;
+}
+
+:root[data-tema="escuro"] .botoes button {
+    background-color: #14b8a6;
+    color: #0f172a;
+}
+
+:root[data-tema="escuro"] .botoes button:hover {
+    background-color: #2dd4bf;
+}
+
+:root[data-tema="escuro"] footer {
+    background-color: #1e293b;
+}
+
+/* Botão de alternar tema */
+.btn-theme {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-theme:hover,
+.btn-theme:focus-visible {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.08);
+    outline: none;
+}
+
+.btn-theme img {
+    width: 24px;
+    height: 24px;
+    filter: invert(1); /* ícone preto -> branco */
+}
+
+body,
+.procedimento,
+.resultado,
+.tabela-cuidados,
+footer {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
 @media (max-width: 700px) {
     .resultado {
         padding: 1.5rem;
@@ -252,6 +335,11 @@ footer {
 
     body {
         background: white;
+        color: #1e293b;
+    }
+
+    .btn-theme {
+        display: none;
     }
 
     main {

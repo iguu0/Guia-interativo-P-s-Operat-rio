@@ -102,3 +102,41 @@ function atualizarBotaoAtivo(procedimentoSelecionado, botaoClicado) {
         botao.classList.toggle("ativo", Boolean(estaAtivo));
     });
 }
+
+
+/* ===== Tema claro / escuro ===== */
+function aplicarTema(tema) {
+    const raiz = document.documentElement;
+    const botao = document.getElementById("btn-theme");
+    const icone = document.getElementById("icone-tema");
+    const escuro = tema === "escuro";
+
+    if (escuro) {
+        raiz.setAttribute("data-tema", "escuro");
+    } else {
+        raiz.removeAttribute("data-tema");
+    }
+
+    if (icone) icone.src = escuro ? "img/sun.png" : "img/moon.png";
+    if (botao) {
+        botao.setAttribute("aria-label", escuro ? "Ativar tema claro" : "Ativar tema escuro");
+        botao.setAttribute("aria-pressed", String(escuro));
+    }
+}
+
+function alternarTema() {
+    const novoTema = document.documentElement.getAttribute("data-tema") === "escuro" ? "claro" : "escuro";
+    aplicarTema(novoTema);
+    try { localStorage.setItem("tema", novoTema); } catch (e) {}
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    let salvo = null;
+    try { salvo = localStorage.getItem("tema"); } catch (e) {}
+
+    // Sem preferência salva: segue o tema do sistema
+    const preferido = salvo || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "escuro" : "claro");
+    aplicarTema(preferido);
+
+    document.getElementById("btn-theme").addEventListener("click", alternarTema);
+});
