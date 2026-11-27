@@ -14,6 +14,11 @@ const dadosCuidados = {
             "Comer alimentos quentes, duros, crocantes ou com sementes.",
             "Praticar exercícios físicos intensos ou pegar sol nos primeiros dias.",
             "Consumir bebidas alcoólicas ou fumar durante a cicatrização."
+        ],
+        avisos: [
+            "Procure o dentista se houver sangramento intenso que não diminui.",
+            "Procure ajuda se houver dor forte, febre, inchaço crescente ou pus.",
+            "Não ignore dificuldade para respirar ou engolir."
         ]
     },
     canal: {
@@ -30,6 +35,11 @@ const dadosCuidados = {
             "Cutucar o curativo provisório com palitos ou objetos pontiagudos.",
             "Abandonar o tratamento após o alívio da dor antes da restauração final.",
             "Consumir alimentos extremamente pegajosos (chicletes, balas mastigáveis)."
+        ],
+        avisos: [
+            "Procure o dentista se a dor piorar ou não melhorar com a medicação.",
+            "Procure ajuda se houver febre, inchaço ou saída de secreção.",
+            "Contate o consultório imediatamente se o curativo provisório cair."
         ]
     },
     clareamento: {
@@ -47,9 +57,17 @@ const dadosCuidados = {
             "Fumar ou usar cigarros eletrônicos durante o tratamento.",
             "Ingerir líquidos muito gelados ou muito quentes se houver sensibilidade.",
             "Aplicar gel clareador em excesso na moldeira."
+        ],
+        avisos: [
+            "Interrompa o uso e procure orientação se houver sensibilidade ou irritação intensa.",
+            "Procure ajuda se houver inchaço nos lábios, dificuldade para respirar ou reação alérgica.",
+            "Contate o dentista se o desconforto persistir ou aumentar."
         ]
     }
 };
+
+let procedimentoSelecionado = null;
+
 function preencherTabela(tbody, itens, simbolo) {
     tbody.replaceChildren();
 
@@ -76,20 +94,37 @@ function mostrarCuidados(procedimento, botaoClicado) {
     const info = dadosCuidados[procedimento];
     if (!info) return;
 
+    procedimentoSelecionado = procedimento;
+
     const tituloEl = document.getElementById("titulo-resultado");
     const subtituloEl = document.getElementById("subtitulo-resultado");
     const areaTabelas = document.getElementById("area-tabelas");
     const corpoFazer = document.getElementById("corpo-tabela-fazer");
     const corpoNaoFazer = document.getElementById("corpo-tabela-nao-fazer");
+    const avisos = document.getElementById("avisos");
+    const listaAvisos = document.getElementById("lista-avisos");
+    const botaoDownload = document.getElementById("btn-download");
 
     tituloEl.textContent = info.titulo;
     subtituloEl.hidden = true;
     areaTabelas.hidden = false;
+    avisos.hidden = false;
+    botaoDownload.disabled = false;
 
     preencherTabela(corpoFazer, info.fazer, "✔️");
     preencherTabela(corpoNaoFazer, info.naoFazer, "✖️");
+    listaAvisos.replaceChildren();
+
+    const fragmento = document.createDocumentFragment();
+    info.avisos.forEach((aviso) => {
+        const li = document.createElement("li");
+        li.textContent = aviso;
+        fragmento.appendChild(li);
+    });
+    listaAvisos.appendChild(fragmento);
 
     atualizarBotaoAtivo(procedimento, botaoClicado);
+    try { localStorage.setItem("procedimento", procedimento); } catch (e) {}
 }
 function atualizarBotaoAtivo(procedimentoSelecionado, botaoClicado) {
     const botoes = document.querySelectorAll(".procedimento");
@@ -97,10 +132,42 @@ function atualizarBotaoAtivo(procedimentoSelecionado, botaoClicado) {
     botoes.forEach(botao => {
         const estaAtivo = botaoClicado
             ? botao === botaoClicado
-            : botao.getAttribute("onclick")?.includes('${procedimentoSelecionado}');
+            : botao.getAttribute("onclick")?.includes(`'${procedimentoSelecionado}'`);
 
         botao.classList.toggle("ativo", Boolean(estaAtivo));
+        botao.setAttribute("aria-pressed", String(Boolean(estaAtivo)));
     });
+}
+
+function baixarCuidados() {
+    if (!procedimentoSelecionado) return;
+
+    const info = dadosCuidados[procedimentoSelecionado];
+    const linhas = [
+        "ODONTOGUIA",
+        info.titulo,
+        "",
+        "O QUE FAZER",
+        ...info.fazer.map((item) => `- ${item}`),
+        "",
+        "O QUE EVITAR",
+        ...info.naoFazer.map((item) => `- ${item}`),
+        "",
+        "QUANDO PROCURAR AJUDA",
+        ...info.avisos.map((item) => `- ${item}`),
+        "",
+        "Este conteúdo é informativo e não substitui a orientação do seu dentista."
+    ];
+
+    const blob = new Blob([linhas.join("\n")], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `cuidados-${procedimentoSelecionado}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
 }
 
 
@@ -139,4 +206,13 @@ document.addEventListener("DOMContentLoaded", () => {
     aplicarTema(preferido);
 
     document.getElementById("btn-theme").addEventListener("click", alternarTema);
+    document.getElementById("btn-download").addEventListener("click", baixarCuidados);
+
+    let procedimentoSalvo = null;
+    try { procedimentoSalvo = localStorage.getItem("procedimento"); } catch (e) {}
+
+    if (procedimentoSalvo && dadosCuidados[procedimentoSalvo]) {
+        const botaoSalvo = document.querySelector(`.procedimento[onclick*="${procedimentoSalvo}"]`);
+        mostrarCuidados(procedimentoSalvo, botaoSalvo);
+    }
 });

@@ -207,6 +207,28 @@ main {
     color: var(--nao-fazer-texto);
 }
 
+.avisos {
+    margin-top: 1.5rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid #fde68a;
+    border-left: 5px solid #d97706;
+    border-radius: 10px;
+    background-color: #fffbeb;
+    color: #78350f;
+}
+
+.avisos h3 {
+    margin-bottom: 0.5rem;
+}
+
+.avisos ul {
+    padding-left: 1.25rem;
+}
+
+.avisos li + li {
+    margin-top: 0.35rem;
+}
+
 .botoes {
     text-align: center;
 }
@@ -225,6 +247,12 @@ main {
 
 .botoes button:hover {
     background-color: #1e293b;
+}
+
+.botoes button:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.75;
 }
 
 footer {
@@ -278,6 +306,12 @@ footer {
 
 :root[data-tema="escuro"] footer {
     background-color: #1e293b;
+}
+
+:root[data-tema="escuro"] .avisos {
+    border-color: #92400e;
+    background-color: #451a03;
+    color: #fde68a;
 }
 
 /* Botão de alternar tema */
