@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OdontoGuia</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <script>g
+        try { if (localStorage.getItem("tema") === "escuro") document.documentElement.setAttribute("data-tema", "escuro"); } catch (e) {}
+    </script>
+</head>
+<body>
+
+    <header>
+        <h1>🦷 OdontoGuia</h1>
+        <p>Cuide do seu sorriso após o procedimento.</p>
+
+        <button type="button" id="btn-theme" class="btn-theme" aria-label="Ativar tema escuro" title="Alternar tema">
+            <img src="img/moon.png" alt="" id="icone-tema" width="24" height="24">
+        </button>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>Qual procedimento você realizou?</h2>
+            <p>Selecione abaixo para consultar os cuidados.</p>
+        </section>
+
+        <section class="procedimentos">
+
+            <button class="procedimento" type="button" onclick="mostrarCuidados('siso', this)">
+                🦷​ Extração de Siso
+            </button>
+
+            <button class="procedimento" type="button" onclick="mostrarCuidados('canal', this)">
+                🩺​ Tratamento de Canal
+            </button>
+
+            <button class="procedimento" type="button" onclick="mostrarCuidados('clareamento', this)">
+                ✨​ Clareamento
+            </button>
+
+        </section>
+
+        <section id="resultado" class="resultado">
+            <h2 id="titulo-resultado">Seus cuidados aparecerão aqui</h2>
+            <p id="subtitulo-resultado">Escolha um procedimento para começar.</p>
+
+            <div id="area-tabelas" class="tabelas-container" hidden>
+                <table class="tabela-cuidados fazer">
+                    <thead>
+                        <tr>
+                            <th scope="col">O que fazer</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-tabela-fazer"></tbody>
+                </table>
+
+                <table class="tabela-cuidados nao-fazer">
+                    <thead>
+                        <tr>
+                            <th scope="col">O que evitar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-tabela-nao-fazer"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="botoes">
+            <button id="btn-download" class="btn-download" type="button">
+                📥 Baixar Cuidados
+            </button>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Guia informativo de cuidados odontológicos.</p>
+        <p>Em caso de dúvidas, siga as orientações do seu dentista.</p>
+    </footer>
+
+    <script src="JS/script.js"></script>
+</body>
+</html>
